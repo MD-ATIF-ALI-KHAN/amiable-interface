@@ -10,6 +10,9 @@ import {
   Sparkles,
   Trash2,
 } from "lucide-react";
+import { Bubble } from "@/components/chat/Bubble";
+import { EmptyState } from "@/components/chat/EmptyState";
+import type { Message, Thread } from "@/components/chat/types";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
@@ -20,9 +23,6 @@ export const Route = createFileRoute("/chat")({
   }),
   component: ChatPage,
 });
-
-type Message = { id: string; role: "user" | "assistant"; text: string };
-type Thread = { id: string; title: string; preview: string; updatedAt: string; messages: Message[] };
 
 const seedThreads: Thread[] = [
   {
