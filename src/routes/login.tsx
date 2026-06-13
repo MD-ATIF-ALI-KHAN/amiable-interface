@@ -1,6 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { Apple, ArrowRight, Eye, EyeOff, Mail, Lock, Sparkles } from "lucide-react";
+import { Field } from "@/components/login/Field";
+import { SocialButton } from "@/components/login/SocialButton";
+import { GoogleIcon } from "@/components/login/GoogleIcon";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
