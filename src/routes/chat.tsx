@@ -10,6 +10,9 @@ import {
   Sparkles,
   Trash2,
 } from "lucide-react";
+import { Bubble } from "@/components/chat/Bubble";
+import { EmptyState } from "@/components/chat/EmptyState";
+import type { Message, Thread } from "@/components/chat/types";
 
 export const Route = createFileRoute("/chat")({
   head: () => ({
@@ -20,9 +23,6 @@ export const Route = createFileRoute("/chat")({
   }),
   component: ChatPage,
 });
-
-type Message = { id: string; role: "user" | "assistant"; text: string };
-type Thread = { id: string; title: string; preview: string; updatedAt: string; messages: Message[] };
 
 const seedThreads: Thread[] = [
   {
@@ -289,58 +289,3 @@ function ChatPage() {
   );
 }
 
-function Bubble({ message }: { message: Message }) {
-  const isUser = message.role === "user";
-  if (isUser) {
-    return (
-      <div className="flex justify-end">
-        <div className="glass-strong max-w-[80%] rounded-3xl rounded-tr-lg px-5 py-3 text-sm leading-relaxed">
-          {message.text}
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="flex gap-3">
-      <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-aurora shadow-[var(--shadow-glow)]">
-        <Sparkles className="h-4 w-4 text-primary-foreground" />
-      </div>
-      <div className="max-w-[85%] whitespace-pre-wrap text-[15px] leading-relaxed text-foreground/95">
-        {message.text}
-      </div>
-    </div>
-  );
-}
-
-function EmptyState({ onPick }: { onPick: (s: string) => void }) {
-  const prompts = [
-    "Explain liquid-glass design in three principles",
-    "Plan a slow weekend in Lisbon",
-    "Suggest five books bridging design and philosophy",
-    "Draft a calming morning routine",
-  ];
-  return (
-    <div className="flex flex-col items-center pt-16 text-center">
-      <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-aurora shadow-[var(--shadow-glow)]">
-        <Sparkles className="h-7 w-7 text-primary-foreground" />
-      </div>
-      <h2 className="font-display text-4xl italic">
-        How can I help, <span className="text-aurora">Iris</span>?
-      </h2>
-      <p className="mt-2 max-w-md text-sm text-muted-foreground">
-        Ask anything — or start from one of these.
-      </p>
-      <div className="mt-8 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
-        {prompts.map((p) => (
-          <button
-            key={p}
-            onClick={() => onPick(p)}
-            className="glass rounded-2xl px-4 py-3 text-left text-sm text-foreground/90 transition hover:scale-[1.01] hover:bg-[oklch(1_0_0_/_12%)]"
-          >
-            {p}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
